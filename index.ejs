@@ -3,13 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <title>Bot Chat Embed Test</title>
-        <link href="https://3dd1cd84.ngrok.io/botchat.css" rel="stylesheet" />
-      <style>
-            .wc-chatview-panel {
-                width: 320px;
-                height: 500px;
+        <link href="https://5330d242.ngrok.io/botchat.css" rel="stylesheet" />
+        <style>
+            .wc-header{
+                    background-color: #000;
+                    padding-top: 12px; 
+            }
+            .wc-message-from-me .wc-message-content{
+                background-color: #000;
             }
 
+            .wc-message-from-me svg.wc-message-callout path{
+                fill: #000;
+            }
         </style>
     </head>
     <body>
@@ -17,7 +23,7 @@
             <div style="margin-left: 320px" id="BotChatGoesHere"/>
             <div style="clear:both;"/>
         </div>
-        <script src="https://3dd1cd84.ngrok.io/botchat.js"></script>
+        <script src="https://5330d242.ngrok.io/botchat.js"></script>
         <script>
             BotChat.App({
                 directLine: {

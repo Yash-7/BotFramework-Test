@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost:27017/SpeechToText';
+var url = 'mongodb://localhost:27017/BotFrameworkPratik';
 
 
 const app = express();
@@ -35,7 +35,7 @@ var bot = new builder.UniversalBot(connector);
 app.post('/api/messages', connector.listen());
 
 
-
+/*
 bot.on('conversationUpdate', function (message) {
     console.log('inside conversationupdate')
     if (message.membersAdded) {
@@ -47,19 +47,36 @@ bot.on('conversationUpdate', function (message) {
     }
 });
 
-const logUserConversation = (event) => {
-    console.log(event.address.id)
-    //console.log('message: ' + event.text + ', user: ' + event.address.user.name);
+*/
+
+const logUserConversation = (event,user) => {
+    var addressid = event.address.id
+
+    var id=addressid.split("|")
+    id=id[0]
+    MongoClient.connect(url, function(err, db) {
+            
+        db.collection('chatmessages').insertOne({
+                "addressid" : id,
+                "user" : user,
+                "message" : event.text,
+                ts : new Date()
+            })
+        
+    })
+    
+    console.log('message: ' + event.text + ', user: ' + event.address.user.id);
 };
 
 
 bot.use({
     receive: function (event, next) {
-        logUserConversation(event);
+        console.log(event)
+        logUserConversation(event, event.address.user.id);
         next();
     },
     send: function (event, next) {
-        logUserConversation(event);
+        logUserConversation(event,"bot");
         next();
     }
 });
